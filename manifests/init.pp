@@ -11,8 +11,6 @@
 # the Free Software Foundation.
 #
 
-# modules_dir { \"avahi\": }
-
 class avahi {
     include avahi::base
 }
@@ -21,7 +19,7 @@ class avahi::base {
     package{'avahi':
         ensure => present,
     }
-    service{avahi:
+    service{'avahi-daemon':
         ensure => running,
         enable => true,
         hasstatus => true,
