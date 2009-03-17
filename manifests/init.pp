@@ -19,6 +19,12 @@ class avahi::base {
     package{'avahi':
         ensure => present,
     }
+    file{'/etc/init.d/avahi-daemon':
+        source => "puppet://${server}/avahi/init.d/${operatingsystem}/avahi-daemon",
+        require => Package['avahi'],
+        before => Service['avahi-daemon'],
+        owner => root, group => 0, mode => 0755;
+    }
     service{'avahi-daemon':
         ensure => running,
         enable => true,
