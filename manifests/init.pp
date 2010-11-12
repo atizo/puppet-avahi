@@ -1,9 +1,10 @@
 #
 # avahi module
 #
-# Copyright 2008, Puzzle ITC
+# Copyright 2008, Puzzle ITC GmbH
+# Copyright 2010, Atizo AG
 # Marcel Härry haerry+puppet(at)puzzle.ch
-# Simon Josi josi+puppet(at)puzzle.ch
+# Simon Josi simon.josi+puppet(at)atizo.com
 #
 # This program is free software; you can redistribute 
 # it and/or modify it under the terms of the GNU 
@@ -12,23 +13,13 @@
 #
 
 class avahi {
-    include avahi::base
-}
-
-class avahi::base {
-    package{'avahi':
-        ensure => present,
-    }
-    file{'/etc/init.d/avahi-daemon':
-        source => "puppet://${server}/avahi/init.d/${operatingsystem}/avahi-daemon",
-        require => Package['avahi'],
-        before => Service['avahi-daemon'],
-        owner => root, group => 0, mode => 0755;
-    }
-    service{'avahi-daemon':
-        ensure => running,
-        enable => true,
-        hasstatus => true,
-        require => Package[avahi],
-    }
+  package{'avahi':
+    ensure => present,
+  }
+  service{'avahi-daemon':
+    ensure => running,
+    enable => true,
+    hasstatus => true,
+    require => Package['avahi'],
+  }
 }
